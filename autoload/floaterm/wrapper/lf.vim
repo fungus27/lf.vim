@@ -2,7 +2,9 @@ function! floaterm#wrapper#lf#(cmd, jobopts, ...) abort
   let lf_tmpfile = tempname()
   let lastdir_tmpfile = tempname()
   let original_dir = getcwd()
-  lcd %:p:h
+  if &buftype !=# "terminal"
+    lcd %:p:h
+  endif
 
   let cmdlist = split(a:cmd)
 

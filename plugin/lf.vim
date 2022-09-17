@@ -24,7 +24,11 @@
 
 " ================ Lf =======================
 function! OpenLfIn(path, edit_cmd)
-  let currentPath = shellescape(isdirectory(a:path) ? fnamemodify(expand(a:path), ":p:h") : expand(a:path))
+  if &buftype !=# "terminal"
+    let currentPath = shellescape(isdirectory(a:path) ? fnamemodify(expand(a:path), ":p:h") : expand(a:path))
+  else
+    let currentPath = getcwd()
+  endif
   let s:edit_cmd = a:edit_cmd
   if exists(":FloatermNew")
     exec 'FloatermNew' . ' --height=' . string(get(g:, 'lf_height', g:floaterm_height)) . ' --width=' . string(get(g:, 'lf_width', g:floaterm_width)) . ' lf -- ' . currentPath
